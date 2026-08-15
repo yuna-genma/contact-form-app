@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContactRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
 use App\Models\Category;
 
@@ -15,7 +14,7 @@ class ContactController extends Controller
         return view('contact._form', compact('categories'));
     }
 
-    public function store(ContactRequest $request)
+    public function store(StoreContactRequest $request)
     {
         $validated = Contact::create($request->validated());
         $category = Category::find($validated->category_id);
