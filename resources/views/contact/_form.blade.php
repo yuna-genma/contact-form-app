@@ -1,8 +1,3 @@
-<head>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<form action="{{ route('form.confirm') }}" method="POST">
-    @csrf
 <!-- お名前 -->
 <div class="grid grid-cols-3 gap-8 mb-4">
     <div class="col-span-1 flex items-center">
@@ -214,7 +209,3 @@
         @enderror
     </div>
 </div>
-<button type="submit" class="px-16 py-3 bg-[#7d7470] hover:bg-[#6b5f57] border border-transparent rounded font-medium text-white transition">
-        確認画面へ
-    </button>
-</form>

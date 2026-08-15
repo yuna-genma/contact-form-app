@@ -11,7 +11,7 @@ class ContactController extends Controller
     public function index()
     {
         $categories = Category::orderBy('created_at', 'desc')->get();
-        return view('contact._form', compact('categories'));
+        return view('contact.index', compact('categories'));
     }
 
     public function store(StoreContactRequest $request)
