@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateTagRequest;
+use App\Http\Requests\StoreTagRequest;
 use App\Models\Tag;
 
 class TagController extends Controller
 {
-    public function store(UpdateTagRequest $request)
+    public function store(StoreTagRequest $request)
     {
         $validated = $request->validated();
         Tag::create($validated);
