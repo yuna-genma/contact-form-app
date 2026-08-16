@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactRequest;
+use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\Category;
 use App\Models\Tag;
@@ -15,22 +16,38 @@ class ContactController extends Controller
         $tags = Tag::all();
         return view('contact.index', compact(['categories', 'tags']));
     }
-    public function store(StoreContactRequest $request)
+
+    public function confirm(StoreContactRequest $request)
     {
-        $contactData = $request->validated();
+        $validated = $request->validated();
+
+        $request->session()->put('contact_input', $validated);
+
+        $category = Category::find($validated['category_id']);
+        $tagIds = $validated['tag_ids'] ?? [];
+        $tags = Tag::whereIn('id', $tagIds)->get();
+
+        return view('contact.confirm', compact(['validated', 'category', 'tags']));
+    }
+    public function store(Request $request)
+    {
+        $contactData = $request->session()->get('contact_input');
+
+        if (!$contactData) {
+            return redirect('/');
+        }
 
         $tagIds = $contactData['tag_ids'] ?? [];
 
         $contact = $contactData;
         unset($contact['tag_ids']);
 
-        $validated = Contact::create($contact);
-        $validated->tags()->attach($tagIds);
+        $newContact = Contact::create($contact);
+        $newContact->tags()->attach($tagIds);
 
-        $category = Category::find($validated->category_id);
-        $tags = Tag::whereIn('id', $tagIds)->get();
+        $request->session()->forget('contact_input');
 
-        return view('contact.confirm', compact(['validated', 'category', 'tags']));
+        return redirect('/thanks');
     }
 
     public function thanks()

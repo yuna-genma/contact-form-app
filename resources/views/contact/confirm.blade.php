@@ -4,7 +4,7 @@
             <h1 class="text-2xl font-serif text-[#6b5744] text-center mb-10">Confirm</h1>
 
             <!-- 確認画面 -->
-            <form action="{{ route('form.thanks') }}" method="GET">
+            <form action="/contacts" method="POST">
                 @csrf
 
                 <!-- お名前 -->
