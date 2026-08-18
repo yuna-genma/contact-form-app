@@ -75,4 +75,44 @@ class TagControllerTest extends TestCase
 
         $response->assertRedirect(route('login'));
     }
+
+    /** @test */
+    public function test_tag_name_create_must_be_unique()
+    {
+        $user = User::factory()->create();
+        Tag::factory()->create(['name' => 'テストタグ']);
+
+        $response = $this->actingAs($user)->post('/admin/tags', [
+            'name' => 'テストタグ'
+        ]);
+
+        $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function test_tag_name_update_can_keep_same_name()
+    {
+        $user = User::factory()->create();
+        $tag = Tag::factory()->create(['name' => 'テストタグ']);
+
+        $response = $this->actingAs($user)->put("/admin/tags/{$tag->id}", [
+            'name' => 'テストタグ'
+        ]);
+
+        $response->assertRedirect('/admin');
+    }
+
+    /** @test */
+    public function test_tag_name_update_must_be_unique()
+    {
+        $user = User::factory()->create();
+        Tag::factory()->create(['name' => '更新失敗']);
+        $tag = Tag::factory()->create(['name' => 'テストタグ']);
+
+        $response = $this->actingAs($user)->put("/admin/tags/{$tag->id}", [
+            'name' => '更新失敗'
+        ]);
+
+        $response->assertSessionHasErrors('name');
+    }
 }

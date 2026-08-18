@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Category;
@@ -22,5 +23,13 @@ class TagModelTest extends TestCase
         $tag = Tag::factory()->create();
 
         $tag->contacts()->sync($contacts->pluck('id'));
+
+        $this->assertInstanceOf(Collection::class, $tag->contacts);
+        $this->assertCount(3, $tag->contacts);
+        $this->assertInstanceOf(Contact::class, $tag->contacts->first());
+        $this->assertEquals(
+            $tag->contacts->pluck('id')->sort()->values()->toArray(),
+            $contacts->pluck('id')->sort()->values()->toArray()
+        );
     }
 }

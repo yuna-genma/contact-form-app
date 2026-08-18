@@ -36,9 +36,10 @@ class ContactModelTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $contact->tags);
         $this->assertCount(3, $contact->tags);
+        $this->assertInstanceOf(Tag::class, $contact->tags->first());
         $this->assertEquals(
-            $tags->pluck('id')->toArray(),
-            $contact->tags->pluck('id')->toArray()
+            $tags->pluck('id')->sort()->values()->toArray(),
+            $contact->tags->pluck('id')->sort()->values()->toArray()
         );
     }
 }
