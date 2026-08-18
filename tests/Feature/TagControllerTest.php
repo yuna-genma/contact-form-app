@@ -2,11 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TagControllerTest extends TestCase
 {
@@ -29,12 +28,12 @@ class TagControllerTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/admin/tags', [
-            'name' => 'テストタグ'
+            'name' => 'テストタグ',
         ]);
 
         $response->assertRedirect('/admin');
         $this->assertDatabaseHas('tags', [
-            'name' => 'テストタグ'
+            'name' => 'テストタグ',
         ]);
     }
 
@@ -45,12 +44,12 @@ class TagControllerTest extends TestCase
         $tag = Tag::factory()->create(['name' => 'テストタグ']);
 
         $response = $this->actingAs($user)->put("/admin/tags/{$tag->id}", [
-            'name' => 'タグ更新'
+            'name' => 'タグ更新',
         ]);
 
         $response->assertRedirect('/admin');
         $this->assertDatabaseHas('tags', [
-            'name' => 'タグ更新'
+            'name' => 'タグ更新',
         ]);
     }
 
@@ -64,7 +63,7 @@ class TagControllerTest extends TestCase
 
         $response->assertRedirect('/admin');
         $this->assertDatabaseMissing('tags', [
-            'name' => 'テストタグ'
+            'name' => 'テストタグ',
         ]);
     }
 
@@ -83,7 +82,7 @@ class TagControllerTest extends TestCase
         Tag::factory()->create(['name' => 'テストタグ']);
 
         $response = $this->actingAs($user)->post('/admin/tags', [
-            'name' => 'テストタグ'
+            'name' => 'テストタグ',
         ]);
 
         $response->assertSessionHasErrors('name');
@@ -96,7 +95,7 @@ class TagControllerTest extends TestCase
         $tag = Tag::factory()->create(['name' => 'テストタグ']);
 
         $response = $this->actingAs($user)->put("/admin/tags/{$tag->id}", [
-            'name' => 'テストタグ'
+            'name' => 'テストタグ',
         ]);
 
         $response->assertRedirect('/admin');
@@ -110,7 +109,7 @@ class TagControllerTest extends TestCase
         $tag = Tag::factory()->create(['name' => 'テストタグ']);
 
         $response = $this->actingAs($user)->put("/admin/tags/{$tag->id}", [
-            'name' => '更新失敗'
+            'name' => '更新失敗',
         ]);
 
         $response->assertSessionHasErrors('name');

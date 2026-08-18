@@ -2,11 +2,10 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTagRequest;
-use App\Models\Tag;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Validator;
+use Tests\TestCase;
 
 class StoreTagRequestTest extends TestCase
 {
@@ -15,7 +14,7 @@ class StoreTagRequestTest extends TestCase
     /** @test */
     public function test_store_tag_request_validation_passes(): void
     {
-        $request = new StoreTagRequest();
+        $request = new StoreTagRequest;
         $tag = ['name' => 'テストタグ'];
 
         $validator = Validator::make($tag, $request->rules());
@@ -25,7 +24,7 @@ class StoreTagRequestTest extends TestCase
     /** @test */
     public function test_tag_name_required()
     {
-        $request = new StoreTagRequest();
+        $request = new StoreTagRequest;
         $tag = ['name' => ''];
 
         $validator = Validator::make($tag, $request->rules());
@@ -36,7 +35,7 @@ class StoreTagRequestTest extends TestCase
     /** @test */
     public function test_tag_name_max_50_characters()
     {
-        $request = new StoreTagRequest();
+        $request = new StoreTagRequest;
         $tag = ['name' => str_repeat('あ', 50)];
 
         $validator = Validator::make($tag, $request->rules());
@@ -46,12 +45,11 @@ class StoreTagRequestTest extends TestCase
     /** @test */
     public function test_tag_name_must_be_within_50()
     {
-        $request = new StoreTagRequest();
+        $request = new StoreTagRequest;
         $tag = ['name' => str_repeat('あ', 51)];
 
         $validator = Validator::make($tag, $request->rules());
         $this->assertFalse($validator->passes());
         $this->assertArrayHasKey('name', $validator->errors()->toArray());
     }
-
 }

@@ -10,7 +10,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'content' => '商品のお届けについて'
+            'content' => '商品のお届けについて',
         ]);
 
         Category::create([

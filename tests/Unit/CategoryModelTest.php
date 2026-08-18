@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
+use App\Models\Category;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Category;
-use App\Models\Contact;
 
 class CategoryModelTest extends TestCase
 {

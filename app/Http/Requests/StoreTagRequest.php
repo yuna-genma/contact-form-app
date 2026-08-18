@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+
 class StoreTagRequest extends FormRequest
 {
     public function authorize(): bool
@@ -18,7 +19,7 @@ class StoreTagRequest extends FormRequest
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('tags', 'name')->ignore($this->tag)
+                Rule::unique('tags', 'name')->ignore($this->tag),
             ],
         ];
     }
@@ -28,7 +29,7 @@ class StoreTagRequest extends FormRequest
         return [
             'name.required' => 'タグ名を入力してください。',
             'name.max' => 'タグ名は50文字以内で入力してください。',
-            'name.unique' => 'そのタグ名は既に使用されています。'
+            'name.unique' => 'そのタグ名は既に使用されています。',
         ];
     }
 }

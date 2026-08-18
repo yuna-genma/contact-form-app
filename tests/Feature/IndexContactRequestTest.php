@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
 class IndexContactRequestTest extends TestCase
 {
     use RefreshDatabase;
@@ -32,7 +33,7 @@ class IndexContactRequestTest extends TestCase
             'date' => now()->format('Y-m-d'),
         ]);
 
-        $response = $this->actingAs($user)->get('/admin?' . $queryParams);
+        $response = $this->actingAs($user)->get('/admin?'.$queryParams);
 
         $response->assertStatus(200);
     }
@@ -52,7 +53,7 @@ class IndexContactRequestTest extends TestCase
 
         $response = $this->actingAs($user)
             ->from('/admin')
-            ->get('/admin?' . $queryParams);
+            ->get('/admin?'.$queryParams);
 
         $response->assertRedirect('/admin');
         $response->assertSessionHasErrors('gender');
@@ -73,7 +74,7 @@ class IndexContactRequestTest extends TestCase
 
         $response = $this->actingAs($user)
             ->from('/admin')
-            ->get('/admin?' . $queryParams);
+            ->get('/admin?'.$queryParams);
 
         $response->assertRedirect('/admin');
         $response->assertSessionHasErrors('keyword');
@@ -93,7 +94,7 @@ class IndexContactRequestTest extends TestCase
 
         $response = $this->actingAs($user)
             ->from('/admin')
-            ->get('/admin?' . $queryParams);
+            ->get('/admin?'.$queryParams);
 
         $response->assertRedirect('/admin');
         $response->assertSessionHasErrors('category_id');

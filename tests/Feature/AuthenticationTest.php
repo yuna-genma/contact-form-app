@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 
 class AuthenticationTest extends TestCase
 {
@@ -38,7 +38,7 @@ class AuthenticationTest extends TestCase
     public function test_wrong_password_can_not_login()
     {
         $user = User::factory()->create([
-            'password' => bcrypt('password123')
+            'password' => bcrypt('password123'),
         ]);
 
         $response = $this->post(route('login'), [

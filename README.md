@@ -191,12 +191,23 @@ alias sail="./vendor/bin/sail"
 - Nginx
 - Docker
 - phpMyAdmin
+- Laravel Fortify
 
 ## APIエンドポイント一覧
 
 ## 開発環境URL
 
 `http://localhost/`
+
+## 機能確認手順
+
+```bash
+   # プロジェクトディレクトリに移動
+   cd contact-form-app
+
+   # テストの実行
+   sail artisan test
+```
 
 ## 作成者
 

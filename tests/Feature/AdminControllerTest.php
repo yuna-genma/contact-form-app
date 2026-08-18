@@ -3,10 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Contact;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AdminControllerTest extends TestCase
@@ -64,7 +64,7 @@ class AdminControllerTest extends TestCase
 
         $response->assertRedirect('/admin');
         $this->assertDatabaseMissing('contacts', [
-            'id' => $contact->id
+            'id' => $contact->id,
         ]);
     }
 
@@ -75,7 +75,7 @@ class AdminControllerTest extends TestCase
         $category = Category::factory()->create();
 
         Contact::factory()->count(8)->create([
-            'category_id' => $category->id
+            'category_id' => $category->id,
         ]);
 
         $response = $this->actingAs($user)->get('/admin');
@@ -100,7 +100,7 @@ class AdminControllerTest extends TestCase
             'last_name' => '太郎',
             'gender' => 1,
             'category_id' => $categoryA->id,
-            'created_at' => '2026-01-15 10:00:00'
+            'created_at' => '2026-01-15 10:00:00',
         ]);
 
         $dummyContact = Contact::factory()->create([
@@ -108,10 +108,10 @@ class AdminControllerTest extends TestCase
             'last_name' => '次郎',
             'gender' => 2,
             'category_id' => $categoryB->id,
-            'created_at' => '2026-05-20 10:00:00'
+            'created_at' => '2026-05-20 10:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get('/admin?' . http_build_query([
+        $response = $this->actingAs($user)->get('/admin?'.http_build_query([
             'keyword' => '検索対象',
             'gender' => 1,
             'category_id' => $categoryA->id,

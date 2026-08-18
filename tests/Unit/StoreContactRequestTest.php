@@ -2,12 +2,13 @@
 
 namespace Tests\Unit;
 
+use App\Http\Requests\StoreContactRequest;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\StoreContactRequest;
+use Tests\TestCase;
+
 class StoreContactRequestTest extends TestCase
 {
     use RefreshDatabase;
@@ -15,7 +16,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_store_contact_request_validation_passes(): void
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -37,7 +38,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_first_name_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -60,7 +61,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_last_name_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -83,7 +84,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_gender_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -106,7 +107,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_email_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -129,7 +130,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_tel_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -152,7 +153,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_invalid_tel()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -175,7 +176,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_address_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -198,7 +199,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_category_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
 
         $data = [
             'first_name' => 'テスト',
@@ -220,7 +221,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_validation_fails_detail_required()
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
 
         $data = [
@@ -243,7 +244,7 @@ class StoreContactRequestTest extends TestCase
     /** @test */
     public function test_tag_addition_validation_passes(): void
     {
-        $request = new StoreContactRequest();
+        $request = new StoreContactRequest;
         $category = Category::factory()->create();
         $tag = Tag::factory()->create();
 

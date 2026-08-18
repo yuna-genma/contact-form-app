@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
 class ContactControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -181,7 +182,6 @@ class ContactControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHasErrors('email');
     }
-
 
     /** @test */
     public function test_tel_required()

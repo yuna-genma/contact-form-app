@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TagModelTest extends TestCase
 {
@@ -18,7 +18,7 @@ class TagModelTest extends TestCase
     {
         $category = Category::factory()->create();
         $contacts = Contact::factory()->count(3)->create([
-            'category_id' => $category->id
+            'category_id' => $category->id,
         ]);
         $tag = Tag::factory()->create();
 
