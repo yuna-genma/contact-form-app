@@ -198,7 +198,7 @@ alias sail="./vendor/bin/sail"
 
 ## 開発環境URL
 
-`http://localhost/`
+`http://localhost`
 
 ## 機能確認手順
 
