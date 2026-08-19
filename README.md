@@ -79,6 +79,7 @@ alias sail="./vendor/bin/sail"
 
     ```bash
     sail npm install -D tailwindcss@^3.4.0 postcss autoprefixer
+    sail npm install alpinejs
     ```
 
 4. 設定ファイルの生成
