@@ -32,14 +32,24 @@ git clone https://github.com/yuna-genma/contact-form-app.git
 # プロジェクトディレクトリに移動
 cd contact-form-app
 
-# Composerパッケージをインストール
+
+# Laravel Sailをインストール
 docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
     -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
     laravelsail/php82-composer:latest \
-    composer install
+    composer require laravel/sail --dev
+
+# Sailの設定ファイルをパブリッシュ（MySQLを選択）
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
+    laravelsail/php82-composer:latest \
+    php artisan sail:install --with=mysql
 
 # 環境設定ファイルをコピー
 cp .env.example .env
