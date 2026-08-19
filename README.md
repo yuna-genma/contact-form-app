@@ -54,8 +54,6 @@ docker run --rm \
 # 環境設定ファイルをコピー
 cp .env.example .env
 
-# Sailを起動
-./vendor/bin/sail up -d
 ```
 
 ### 3. エイリアス設定
@@ -99,7 +97,7 @@ alias sail="./vendor/bin/sail"
     ```
 
 5. Tailwind CSSのテンプレートパス設定
-   `tailwind.config.js`を開き、`content`プロパティを以下のように設定
+   `tailwind.config.js`を開き、`content`プロパティを以下のように設定されているか確認
 
     ```php
     /** @type {import('tailwindcss').Config} */
@@ -116,16 +114,7 @@ alias sail="./vendor/bin/sail"
     }
     ```
 
-6. CSSファイルにTailwindディレクティブを追加
-   `resources/css/app.css`の中身を以下の3行に置き換える
-
-    ```php
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-    ```
-
-7. Vite開発サーバーの起動
+6. Vite開発サーバーの起動
    新しいターミナルを開いて実行する。
    ※このコマンドは開発中、常に実行したままにする。
     ```bash
@@ -134,7 +123,7 @@ alias sail="./vendor/bin/sail"
 
 ### 5. envファイルとphpMyAdminの設定
 
-1.  .envファイルの確認
+1.  .envファイルの確認<br>
     `.env`ファイルを開き、データベース接続情報が以下と一致していることを確認する<br>
     一致しない場合は以下の情報に書き換える
 
@@ -181,19 +170,20 @@ alias sail="./vendor/bin/sail"
 
 ### 7. 動作確認
 
-1. Laravelの動作確認
-   ブラウザで`http://localhost`にアクセスする。
-   Laravelのウェルカムページが表示されることを確認
+1. Laravelの動作確認<br>
+   ブラウザで`http://localhost/`にアクセスする。<br>
+   以下のお問い合わせフォーム入力ページが表示されるか確認
+   ![alt text](フォーム入力ページ.png)
 
-2. phpMyAdminの動作確認
+2. phpMyAdminの動作確認<br>
    ブラウザで`http://localhost:8080`にアクセスする。
    phpMyAdminが表示されることを確認
 
 3. マイグレーションの実行
     ```bash
-    sail artisan migrate
+    sail artisan migrate:refresh --seed
     ```
-    phpMyAdminで`users`テーブルが作られていることを確認する
+    phpMyAdminで`users`、`contacts`、`categories`、`tags`テーブルが作られていること・各々に初期データが入力されていることを確認する。
 
 ## 使用技術
 
@@ -212,13 +202,81 @@ alias sail="./vendor/bin/sail"
 
 ## 機能確認手順
 
+### ブラウザでの動作確認
+
+#### お問い合わせフォーム
+
+1. ブラウザで`http://localhost/`にアクセスし、以下の画面が表示されることを確認する。<br>
+   ![alt text](フォーム入力ページ-1.png)
+
+2. 必須入力項目入力後、確認ページへ遷移するのを確認する。<br>
+   修正ボタンで前ページへ戻ることができることを確認する。<br>
+   ![alt text](確認画面.png)
+
+3. 確認画面の送信ボタンでサンクスページに遷移する<br>
+   phpMyAdminで入力内容がデータベースに保存されているか確認する。<br>
+   ![alt text](サンクスページ.png)
+
+#### 管理者画面
+
+1. ブラウザで`http://localhost/admin`にアクセスする。<br>
+   以下のようなログイン画面が表示される<br>
+   ![alt text](ログイン画面.png)
+2. ログイン画面右上の「register」ボタンで管理者登録画面へ遷移する。<br>
+   ![alt text](管理者登録画面-1.png)
+3. 登録画面ですべての項目を入力し、登録ボタンを押すと以下の管理画面へ遷移する。<br>
+   ![alt text](管理画面.png)
+    - お問い合わせ項目「詳細」ボタンで詳細ページに遷移。<br>
+      「一覧へ戻る」で管理画面に戻り、「削除」ボタンで管理画面にリダイレクトされ、項目削除されていることを確認する。
+    - 新しいタグの名前を入力し、「追加ボタン」で追加できることを確認する。
+    - タグの「編集」ボタンでタグ編集ページへ遷移する。<br>
+      「戻る」ボタンで管理画面に戻り、「更新」ボタンで管理画面にリダイレクトされ、タグ名が更新されているか確認する。
+    - タグの「削除」ボタンで管理画面にリダイレクトされ、項目削除されていることを確認する。
+
+### テストでの機能確認
+
 ```bash
    # プロジェクトディレクトリに移動
    cd contact-form-app
 
-   # テストの実行
-   sail artisan test
+   # 全てのテストを実行
+   sail test
 ```
+
+全てのテストがpassすることを確認する。
+
+#### カバレッジレポートの確認
+
+1. `.env`ファイルに以下の行を追加
+
+```bash
+   XDEBUG_MODE=coverage
+```
+
+2. コンテナを再起動して設定を反映する。
+
+```bash
+   sail down
+   sail up -d
+```
+
+3. Vite開発サーバーを起動(別のターミナルタブで実行)
+
+```bash
+   sail npm run dev
+```
+
+4. カバレッジレポートの生成
+
+```bash
+   # HTMLレポートを生成
+   sail test --coverage-html=coverage
+
+   # ターミナルに概要を表示
+   sail test --coverage
+```
+
+`Total: 75.9 %`と表示されることを確認する。
 
 ## 作成者
 

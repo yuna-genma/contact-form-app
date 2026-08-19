@@ -28,6 +28,8 @@ class ContactController extends Controller
         $tagIds = $validated['tag_ids'] ?? [];
         $tags = Tag::whereIn('id', $tagIds)->get();
 
+        $request->flash();
+
         return view('contact.confirm', compact(['validated', 'category', 'tags']));
     }
 
@@ -35,7 +37,7 @@ class ContactController extends Controller
     {
         $contactData = $request->session()->get('contact_input');
 
-        if (! $contactData) {
+        if (!$contactData) {
             return redirect('/');
         }
 
