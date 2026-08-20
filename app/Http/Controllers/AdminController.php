@@ -36,7 +36,7 @@ class AdminController extends Controller
 
         $contacts = $query->orderBy('created_at', 'desc')->paginate(7);
         $categories = Category::all();
-        $tags = Tag::orderBy('created_at', 'desc')->get();
+        $tags = Tag::all();
 
         return view('admin.index', compact(['contacts', 'categories', 'tags']));
     }
