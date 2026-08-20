@@ -22,10 +22,12 @@ class ContactResource extends JsonResource
                 'id' => $this->category->id,
                 'content' => $this->category->content,
             ],
-            'tag' => [
-                'id' => $this->tags_id,
-                'name' => $this->tag_name,
-            ],
+            'tags' => $this->tags->map(function ($tag) {
+                return [
+                    'id' => $tag->id,
+                    'name' => $tag->name,
+                ];
+            })->toArray(),
             'address' => $this->address,
             'building' => $this->building,
             'detail' => $this->detail,
