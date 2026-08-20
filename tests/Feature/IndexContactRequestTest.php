@@ -27,13 +27,14 @@ class IndexContactRequestTest extends TestCase
         ]);
 
         $queryParams = http_build_query([
+
             'keyword' => 'テスト',
             'gender' => 1,
             'category_id' => $category->id,
             'date' => now()->format('Y-m-d'),
         ]);
 
-        $response = $this->actingAs($user)->get('/admin?'.$queryParams);
+        $response = $this->actingAs($user)->get('/admin?' . $queryParams);
 
         $response->assertStatus(200);
     }
@@ -53,7 +54,7 @@ class IndexContactRequestTest extends TestCase
 
         $response = $this->actingAs($user)
             ->from('/admin')
-            ->get('/admin?'.$queryParams);
+            ->get('/admin?' . $queryParams);
 
         $response->assertRedirect('/admin');
         $response->assertSessionHasErrors('gender');
@@ -74,7 +75,7 @@ class IndexContactRequestTest extends TestCase
 
         $response = $this->actingAs($user)
             ->from('/admin')
-            ->get('/admin?'.$queryParams);
+            ->get('/admin?' . $queryParams);
 
         $response->assertRedirect('/admin');
         $response->assertSessionHasErrors('keyword');
@@ -94,7 +95,7 @@ class IndexContactRequestTest extends TestCase
 
         $response = $this->actingAs($user)
             ->from('/admin')
-            ->get('/admin?'.$queryParams);
+            ->get('/admin?' . $queryParams);
 
         $response->assertRedirect('/admin');
         $response->assertSessionHasErrors('category_id');
