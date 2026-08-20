@@ -49,6 +49,7 @@ class StoreContactRequest extends FormRequest
             'category_id.exists' => '選択されたカテゴリーは存在しません。',
             'detail.required' => 'お問い合わせ内容は必須です。',
             'detail.max' => 'お問い合わせ内容は255文字以内で入力してください。',
+            'tag_ids.*.exists' => '選択されたタグが存在しません'
         ];
     }
 }

@@ -82,7 +82,7 @@ class ContactController extends Controller
         unset($validated['tag_ids']);
 
         $contact->update($validated);
-        $contact->tags()->attach($tagIds);
+        $contact->tags()->sync($tagIds);
 
         $contact->load(['category', 'tags']);
 

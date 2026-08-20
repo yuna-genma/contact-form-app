@@ -69,7 +69,7 @@ class AdminControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_admin_index_pagenation_7_idems()
+    public function test_admin_index_pagination_7_idems()
     {
         $user = User::factory()->create();
         $category = Category::factory()->create();
@@ -111,7 +111,7 @@ class AdminControllerTest extends TestCase
             'created_at' => '2026-05-20 10:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get('/admin?'.http_build_query([
+        $response = $this->actingAs($user)->get('/admin?' . http_build_query([
             'keyword' => '検索対象',
             'gender' => 1,
             'category_id' => $categoryA->id,

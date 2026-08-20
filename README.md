@@ -196,6 +196,36 @@ alias sail="./vendor/bin/sail"
 
 ## APIエンドポイント一覧
 
+### AP01:お問い合わせ一覧取得
+
+- エンドポイント：`/api/v1/contacts`
+- メソッド：`GET`
+- 説明：お問い合わせ一覧（検索・ページネーション付き）
+
+### AP02:お問い合わせ詳細取得
+
+- エンドポイント：`/api/v1/contacts/{contact}`
+- メソッド：`GET`
+- 説明：お問い合わせ詳細（カテゴリ・タグ含む）
+
+### API03:お問い合わせ登録
+
+- エンドポイント：`/api/v1/contacts`
+- メソッド：`POST`
+- 説明：お問い合わせ新規作成
+
+### AP04:お問い合わせ更新
+
+- エンドポイント：`/api/v1/contacts/{contact}`
+- メソッド：`PUT`
+- 説明：お問い合わせ更新
+
+### AP05:お問い合わせ削除
+
+- エンドポイント：`/api/v1/contacts/{contact}`
+- メソッド：`DELETE`
+- 説明：お問い合わせ削除
+
 ## 開発環境URL
 
 `http://localhost`
@@ -226,10 +256,10 @@ alias sail="./vendor/bin/sail"
    ![alt text](管理者登録画面-1.png)
 3. 登録画面ですべての項目を入力し、登録ボタンを押すと以下の管理画面へ遷移する。<br>
    ![alt text](管理画面.png)
-    - お問い合わせ項目「詳細」ボタンで詳細ページに遷移。<br>
+    - お問い合わせ項目「詳細」ボタンで詳細ページ(`'/admin/contacts/{contact}'`)に遷移。<br>
       「一覧へ戻る」で管理画面に戻り、「削除」ボタンで管理画面にリダイレクトされ、項目削除されていることを確認する。
     - 新しいタグの名前を入力し、「追加ボタン」で追加できることを確認する。
-    - タグの「編集」ボタンでタグ編集ページへ遷移する。<br>
+    - タグの「編集」ボタンでタグ編集ページ(`/admin/tags/{tag}/edit`)へ遷移する。<br>
       「戻る」ボタンで管理画面に戻り、「更新」ボタンで管理画面にリダイレクトされ、タグ名が更新されているか確認する。
     - タグの「削除」ボタンで管理画面にリダイレクトされ、項目削除されていることを確認する。
 
@@ -276,7 +306,72 @@ alias sail="./vendor/bin/sail"
    sail test --coverage
 ```
 
-`Total: 75.9 %`と表示されることを確認する。
+### APIの動作確認（Postmanを使用）
+
+#### お問い合わせ一覧取得
+
+- メソッド：`GET`
+- URL:`http://localhost/api/v1/contacts`
+- 期待：ステータスコード`200 OK`
+
+#### お問い合わせ登録
+
+- メソッド：`POST`
+- URL:`http://localhost/api/v1/contacts`
+- Headers:
+    - `Accept`:`application/json`
+- Body(JSON):
+    ```php
+       {
+       "first_name":"テスト",
+       "last_name":"太郎",
+       "gender":1,
+       "email":"test@example.com",
+       "tel":"09000000000",
+       "address":"東京都",
+       "category_id":1,
+       "detail":"テスト",
+       "tag_ids":[1]
+     }
+    ```
+- 期待：ステータスコード`201 Created`
+
+#### お問い合わせ詳細取得
+
+- メソッド：`GET`
+- URL:`http://localhost/api/v1/contacts/{contact}`<br>
+  ※`{contact}`内にはお問い合わせ登録で作成した、お問い合わせのidを入力する
+- 期待：ステータスコード`200 OK`
+
+#### お問い合わせ更新
+
+- メソッド：`PUT`
+- URL:`http://localhost/api/v1/contacts/{contact}`<br>
+  ※`{contact}`内にはお問い合わせ登録で作成した、お問い合わせのidを入力する
+- Headers:
+    - `Accept`:`application/json`
+- Body(JSON):
+    ```php
+    {
+    "first_name":"更新",
+    "last_name":"しました",
+    "gender":2,
+    "email":"test_update@example.com",
+    "tel":"09099990000",
+    "address":"大阪府",
+    "category_id":2,
+    "detail":"テスト更新しました",
+    "tag_ids":[2]
+    }
+    ```
+- 期待：ステータスコード`200 OK`
+
+### AP05:お問い合わせ削除
+
+- メソッド：`DELETE`
+- URL:`http://localhost/api/v1/contacts/{contact}`<br>
+  ※`{contact}`内にはお問い合わせ登録で作成した、お問い合わせのidを入力する
+- 期待：ステータスコード`204 No Content`
 
 ## 作成者
 
