@@ -14,12 +14,14 @@ class UpdateTagRequest extends FormRequest
 
     public function rules(): array
     {
+        $tagId = $this->route('tag')?->id;
+
         return [
             'name' => [
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('tags', 'name')->ignore($this->tag),
+                Rule::unique('tags', 'name')->ignore($tagId),
             ],
         ];
     }
