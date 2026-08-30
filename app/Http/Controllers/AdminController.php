@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function index(IndexContactRequest $request)
     {
-        $query = Contact::query();
+        $query = Contact::with(['category', 'tags']);
 
         if ($request->filled('keyword')) {
             $keyword = $request->input('keyword');
